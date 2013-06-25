@@ -16,6 +16,7 @@ public class WaitNotify {
         Thread pingThread = new Thread() {
             @Override
             public void run() {
+                setName("thread1");
                 int i = 0;
                 while (i < 3) {
                     synchronized (monitor) {
@@ -27,7 +28,7 @@ public class WaitNotify {
                                 e.printStackTrace();
                             }
                         }
-                        System.out.println("Ping");
+                        System.out.println("[" + Thread.currentThread().getName() +"] Ping");
                         pongReady.set(true);
                         pingReady.set(false);
                         monitor.notifyAll();
@@ -40,6 +41,7 @@ public class WaitNotify {
         Thread pongThread = new Thread() {
             @Override
             public void run() {
+                setName("thread2");
                 int i = 0;
                 while (i < 3) {
                     synchronized (monitor) {
@@ -51,7 +53,7 @@ public class WaitNotify {
                             }
                         }
 
-                        System.out.println("Pong");
+                        System.out.println("[" + Thread.currentThread().getName() +"] Pong");
                         pingReady.set(true);
                         pongReady.set(false);
                         monitor.notifyAll();

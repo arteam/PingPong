@@ -20,6 +20,7 @@ public class Locks {
         Thread pingThread = new Thread() {
             @Override
             public void run() {
+                setName("thread1");
                 int i = 0;
                 while (i < 3) {
                     monitor.lock();
@@ -32,7 +33,7 @@ public class Locks {
                                 return;
                             }
                         }
-                        System.out.println("Ping");
+                        System.out.println("[" + Thread.currentThread().getName() +"] Ping");
                         pongReady.set(true);
                         pingReady.set(false);
                         condition.signalAll();
@@ -47,6 +48,7 @@ public class Locks {
         Thread pongThread = new Thread() {
             @Override
             public void run() {
+                setName("thread2");
                 int i = 0;
                 while (i < 3) {
                     monitor.lock();
@@ -59,8 +61,7 @@ public class Locks {
                                 return;
                             }
                         }
-
-                        System.out.println("Pong");
+                        System.out.println("[" + Thread.currentThread().getName() +"] Pong");
                         pingReady.set(true);
                         pongReady.set(false);
                         condition.signalAll();

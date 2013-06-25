@@ -13,6 +13,7 @@ public class Main {
             new Locks().work();
             new MessageQueue().work();
             new WaitNotify().work();
+            new Exchangers().work();
         }
     }
 }

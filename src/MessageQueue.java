@@ -21,11 +21,12 @@ public class MessageQueue {
             Thread pingThread = new Thread() {
                 @Override
                 public void run() {
+                    setName("thread1");
                     int i = 0;
                     while (i < 3) {
                         try {
                             pingQueue.take();
-                            System.out.println("Ping");
+                            System.out.println("[" + Thread.currentThread().getName() +"] Ping");
                             pongQueue.put(new Object());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -38,11 +39,12 @@ public class MessageQueue {
             Thread pongThread = new Thread() {
                 @Override
                 public void run() {
+                    setName("thread2");
                     int i = 0;
                     while (i < 3) {
                         try {
                             pongQueue.take();
-                            System.out.println("Pong");
+                            System.out.println("[" + Thread.currentThread().getName() +"] Pong");
                             pingQueue.put(new Object());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
